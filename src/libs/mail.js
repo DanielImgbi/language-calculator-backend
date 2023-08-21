@@ -1,10 +1,6 @@
 const nodeMailer = require("nodemailer");
 
 const createMail = (receiver, text) => {
-  if (!receiver || !text) {
-    return;
-  }
-
   console.log(text, receiver);
   const transporter = nodeMailer.createTransport({
     service: "Gmail",

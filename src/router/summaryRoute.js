@@ -6,10 +6,6 @@ const router = express.Router();
 router.post("/summary", (req, res) => {
   const { receiver, text } = req.body;
 
-  if (!receiver || !text) {
-    res.status(401).json({ message: "fields cannot be empty" });
-  }
-
   try {
     console.log(receiver, text);
     const response = sendMail(receiver, text);

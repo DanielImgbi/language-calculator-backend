@@ -2,13 +2,13 @@ const fs = require("fs");
 const stringify = require("csv-stringify").stringify;
 
 const saveCSV = (req, res, next) => {
-  const { receiver, text } = req.body;
+  const data = req.body.data;
 
-  if (!receiver || !text) {
-    return;
+  if (!data || !data.length) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Please enter at a 1 row" });
   }
-
-  const data = [receiver, text];
 
   stringify(
     data,

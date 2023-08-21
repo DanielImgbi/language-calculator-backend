@@ -1,31 +1,39 @@
 const nodeMailer = require("nodemailer");
 
-const createMail = (receiver, subject, text) => {
-  if ((!receiver, !subject, !text)) {
+const createMail = (receiver, text) => {
+  if (!receiver || !text) {
     return;
   }
 
-  const transporter = createTransport({
-    host: "smtp.mailtrap.com",
-    port: 2525,
+  console.log(text, receiver);
+  const transporter = nodeMailer.createTransport({
+    service: "Gmail",
     auth: {
-      user: "",
-      pass: "",
+      user: "kapilmalhi371@gmail.com",
+      pass: "add your password",
+    },
+    tls: {
+      rejectUnauthorized: false,
     },
   });
 
   const message = {
-    from: "",
+    from: "kapilmalhi371@gmail.com",
     to: `${receiver}`,
-    subject: `${subject}`,
-    text: `${text}`,
+    subject: `Result`,
+    text: `the following are the summary of your score for word know test. G1${text[0]}, G2${text[1]}, G3${text[2]}, G4${text[3]}`,
   };
 
   transporter.sendMail(message, (err, info) => {
     if (err) {
       console.log(err);
+      throw Error("error occured! something went wrong");
     } else {
       console.log(info);
+      console.log({
+        message: "Congratulations! you will receive an email of your scores.",
+      });
+      return "it worked";
     }
   });
 };

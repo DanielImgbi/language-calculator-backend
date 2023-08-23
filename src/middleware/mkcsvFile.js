@@ -1,7 +1,8 @@
 const csv = require("fast-csv");
 const fs = require("fs");
 
-const createCsvFile = () => {
+const createCsvFile = (data) => {
+  console.log("csv here");
   const stream = csv.format({
     headers: true,
   });
@@ -14,14 +15,11 @@ const createCsvFile = () => {
 
   stream.pipe(write);
 
-  stream.write({
-    name: "Daniel",
-    surname: "Imgbi",
-    text: "hello world",
-  });
+  stream.write(data);
 
   stream.end();
   write.end();
+  console.log("Done!!!!!");
 };
 
 module.exports = createCsvFile;

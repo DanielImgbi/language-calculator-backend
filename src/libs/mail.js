@@ -1,16 +1,22 @@
-const nodeMailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 
-const createMail = (receiver, text) => {
+const mailer = (receiver, text) => {
   if (!receiver || !text) {
     return;
   }
 
-  console.log(text, receiver);
-  const transporter = nodeMailer.createTransport({
-    service: "Gmail",
+  const html = `
+  <h1>Your Scores For English Test</h1>
+  <p> the following are the summary of your score for word know test. G1${text.G1}, G2${text.G2}, G3${text.G3}, G4${text.G4} </p>
+  <footer>Courtesy  LCT</footer>
+  `;
+
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: "26",
     auth: {
-      user: "kapilmalhi371@gmail.com",
-      pass: "add your password",
+      user: "languagecalculatortestemail@gmail.com",
+      pass: "irodtuqnovhkjzbv",
     },
     tls: {
       rejectUnauthorized: false,
@@ -18,23 +24,23 @@ const createMail = (receiver, text) => {
   });
 
   const message = {
-    from: "kapilmalhi371@gmail.com",
+    from: "languagecalculatortestemail@gmail.com",
     to: `${receiver}`,
-    subject: `Result`,
-    text: `the following are the summary of your score for word know test. G1${text.G1}, G2${text.G2}, G3${text.G3}, G4${text.G4}`,
+    subject: `Language Calculator Test`,
+    html: html,
   };
 
   transporter.sendMail(message, (err, info) => {
     if (err) {
       console.log(err);
-      throw Error("error occured! something went wrong");
-    } else {
-      console.log(info);
-      console.log({
-        message: "Congratulations! you will receive an email of your scores.",
-      });
+      return false;
+    }
+    if (info) {
+      console.log("message sent", info.response);
     }
   });
+
+  return true;
 };
 
-module.exports = createMail;
+module.exports = mailer;

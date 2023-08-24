@@ -11,6 +11,11 @@ app.use(body_parser.urlencoded({ extends: false }));
 app.use(body_parser.json());
 app.use(cors());
 
+app.use((req, res, next) => {
+  console.log(req.url);
+  next();
+});
+
 app.use("/api", grid);
 app.use("/api", summary);
 

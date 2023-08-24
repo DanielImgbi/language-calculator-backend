@@ -1,5 +1,5 @@
 const express = require("express");
-const createCsvFile = require("../middleware/mkcsvFile");
+const createCsvFile = require("../libs/mkcsvFile");
 const mailer = require("../libs/mail");
 const router = express.Router();
 
@@ -7,6 +7,13 @@ router.post("/summary", (req, res) => {
   const { receiver, text } = req.body;
 
   try {
+    if (!receiver || !text) {
+      throw Error("please fill the fields properly!");
+    }
+
+    console.log(receiver, text);
+    mailer(receiver, text);
+
     res.status(200).json({
       message: "Congratulations! you will receive an email of your scores.",
     });

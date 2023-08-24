@@ -12,14 +12,10 @@ const mailer = (receiver, text) => {
   `;
 
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: "26",
+    service: "gmail",
     auth: {
-      user: "languagecalculatortestemail@gmail.com",
-      pass: "irodtuqnovhkjzbv",
-    },
-    tls: {
-      rejectUnauthorized: false,
+      user: "kapildevm371@gmail.com",
+      pass: "trlguhvjsbglmukq",
     },
   });
 
